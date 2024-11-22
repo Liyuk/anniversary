@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Forever - Fish & Shadow</title>
+    <!-- Semantic UI CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background: url('./background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+        }
+        .container {
+            display: flex;
+            width: 80%;
+            max-width: 1200px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .photo-container {
+            position: relative;
+            width: 30%;
+            padding-bottom: 20%; /* 3:2 aspect ratio */
+            margin-right: 20px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        .photo-container img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .timer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 70%;
+        }
+        .timer-card {
+            width: 100%;
+            margin-bottom: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            color: #333;
+        }
+        .timer-label {
+            font-size: 1.2em;
+            color: #ffcccb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="photo-container">
+            <img src="./photo.JPG" alt="Couple Photo">
+        </div>
+        <div class="timer-container">
+            <div class="ui card timer-card">
+                <div class="content">
+                    <div class="header">1992年2月21日</div>
+                    <div class="description timer">
+                        从1992年2月21日00:00:00起已经过去了 <span id="timeElapsed1"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="ui card timer-card">
+                <div class="content">
+                    <div class="header">1993年7月28日</div>
+                    <div class="description timer">
+                        从1993年7月28日00:00:00起已经过去了 <span id="timeElapsed2"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="ui card timer-card">
+                <div class="content">
+                    <div class="header">2024年10月6日</div>
+                    <div class="description timer">
+                        从2024年10月6日00:00:00起已经过去了 <span id="timeElapsed3"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const startTimes = [
+            new Date('1992-02-21T00:00:00').getTime(),
+            new Date('1993-07-28T00:00:00').getTime(),
+            new Date('2024-10-06T00:00:00').getTime()
+        ];
+
+        function updateTime(startTime, elementId) {
+            const now = new Date().getTime();
+            const elapsedTime = now - startTime;
+
+            // 计算天、小时、分钟和秒
+            const days = Math.floor(elapsedTime / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((elapsedTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((elapsedTime % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((elapsedTime % (1000 * 60)) / 1000);
+
+            // 更新页面上的时间显示
+            document.getElementById(elementId).textContent = `${days}天 ${hours}小时 ${minutes}分钟 ${seconds}秒`;
+        }
+
+        function updateAllTimes() {
+            startTimes.forEach((startTime, index) => {
+                updateTime(startTime, `timeElapsed${index + 1}`);
+            });
+        }
+
+        // 每秒更新一次时间
+        setInterval(updateAllTimes, 1000);
+
+        // 初始化时间
+        updateAllTimes();
+    </script>
+</body>
+</html>
